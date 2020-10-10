@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="multipart/form-data">
+    <title>图书管理系统</title>
+    <style>
+        .text {
+            font-size: 16px;
+        }
+
+        #bookList {
+            margin: auto;
+        }
+
+        .form {
+            /*float: left;*/
+            /*height: 300px;*/
+            width: 300px;
+            border-color: #05e833;
+            border-style: solid;
+            border-width: 4px;
+
+        }
+
+        .inputs {
+            width: 200px;
+            height: 20px;
+            font-size: 16px;
+            border-color: #151515;
+        }
+
+        .imagInputs {
+            width: 200px;
+            height: 30px;
+            font-size: 16px;
+            border-color: #151515;
+        }
+
+        .button {
+            width: 50px;
+            height: 25px;
+            font-size: 16px;
+            background: #fffefe;
+            color: #ff0000;
+        }
+    </style>
+</head>
+<body>
+<div style="color: #05e833;margin:0 auto;width: 1110px;text-align: center" th:if="${feedBack}">
+    <p th:text="${feedBack}" style="font-size: 24px"></p>
+</div>
+<div>
+    <div style="float: left;position: fixed">
+        <div>
+            <div>
+                <p style="font-size: 22px">交互界面</p>
+            </div>
+            <div style="overflow: auto;height: 500px">
+
+                <!--                <div class="form" id="postTest">-->
+                <!--                    <p class="formText">图片传输测试</p>-->
+                <!--                    <form th:action="@{/postTest}" method="post" enctype="multipart/form-data">-->
+                <!--                        <p>打开路径：-->
+                <!--                            <input class="imagInputs" type="file" name="file">-->
+                <!--                        </p>-->
+                <!--                        <button class="button" type="submit" value="提交">提交</button>-->
+                <!--                    </form>-->
+                <!--                </div>-->
+
+                <div class="form" id="searchByName">
+                    <p class="formText">按图书名模糊查询</p>
+                    <form th:action="@{/searchByName}" method="post">
+                        <p>图书名称：
+                            <input class="inputs" type="text" name="name" placeholder="置空查询所有">
+                        </p>
+                        <button class="button" type="submit" value="提交">查询</button>
+                    </form>
+                </div>
+                <div class="form" id="searchByNum">
+                    <p class="formText">按图书编号查询</p>
+                    <form th:action="@{/searchByNum}" method="post">
+                        <p>图书编号：
+                            <input class="inputs" type="text" name="num" placeholder="int型整数">
+                        </p>
+                        <button class="button" type="submit" value="提交">查询</button>
+                    </form>
+                </div>
+                <div class="form" id="insertBook">
+                    <form th:action="@{/insertBook}" method="post" enctype="multipart/form-data">
+                        <p>按信息增加图书</p>
+                        <p>图书编号:
+                            <input class="inputs" type="text" name="num" placeholder="图书编号(必填,int)">
+                        </p>
+                        <p>图书名称:
+                            <input class="inputs" type="text" name="name" placeholder="图书名称(必填)">
+                        </p>
+                        <p>图书类型:
+                            <input class="inputs" type="text" name="type" placeholder="图书类型(必填)">
+                        </p>
+                        <p>图书作者:
+                            <input class="inputs" type="text" name="author" placeholder="图书作者(选填)">
+                        </p>
+                        <p>上传封面:
+                            <input class="imagInputs" type="file" name="file" placeholder="封面地址(选填)">
+                        </p>
+                        <button class="button" type="submit" value="提交">保存</button>
+                    </form>
+                </div>
+                <div class="form" id="updateBook">
+                    <form th:action="@{/updateBook}" method="post">
+                        <p>按编号修改图书信息</p>
+                        <p>图书编号:
+                            <input class="inputs" type="text" name="num" placeholder="图书编号(必填,int)">
+                        </p>
+                        <p>修改名称:
+                            <input class="inputs" type="text" name="name" placeholder="选填">
+                        </p>
+                        <p>修改类型:
+                            <input class="inputs" type="text" name="type" placeholder="选填">
+                        </p>
+                        <p>修改作者:
+                            <input class="inputs" type="text" name="author" placeholder="选填">
+                        </p>
+<!--                        <p>修改封面:-->
+<!--                            <input class="inputs" type="text" name="address" placeholder="选填">-->
+<!--                        </p>-->
+                        <button class="button" type="submit" value="提交">保存</button>
+                    </form>
+                </div>
+                <div class="form" id="subscribeBook">
+                    <p>按图书编号(取消)预定图书</p>
+                    <form th:action="@{/subscribeBook}" method="post">
+                        <p>图书编号:
+                            <input class="inputs" type="text" name="num">
+                        </p>
+                        <button class="button" type="submit" value="提交">提交</button>
+                    </form>
+                </div>
+                <div class="form" id="scrapBook">
+                    <p>按图书编号(取消)报废图书</p>
+                    <form th:action="@{/scrapBook}" method="post">
+                        <p>图书编号:
+                            <input class="inputs" type="text" name="num">
+                        </p>
+                        <button class="button" type="submit" value="提交">确定</button>
+                    </form>
+                </div>
+                <div class="form" id="deleteBook">
+                    <p>按图书编号删除图书</p>
+                    <form th:action="@{/deleteBook}" method="post">
+                        <p>图书编号:
+                            <input class="inputs" type="text" name="num" placeholder="三思而后行">
+                        </p>
+                        <button class="button" type="submit" value="提交">删除</button>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div style="float: left;margin-left: 40px;position:absolute;left: 350px">
+        <p style="font-size: 20px">图书信息展示:</p>
+        <div id="bookList" th:each="book:${bookInfos}"
+             style="width: 810px;height: 250px;border-style: solid;border-width: 2px;border-color: aqua
+    ">
+            <div style="height: 250px;width: 200px;margin: auto;float: left">
+                <img th:src="@{${book.address}}" alt="获取图片失败" height="250px" width="200px">
+            </div>
+            <div style="height: 250px;width:600px;float: left;margin-left: 10px">
+                <p class=" text
+        " th:text="'图书编号:'+${book.num}"></p>
+                <p class="text" th:text="'图书名称:'+${book.name}"></p>
+                <p class="text" th:text="'图书类型:'+${book.type}"></p>
+                <p class="text" th:text="'图书作者:'+${book.author}"></p>
+                <p class="text" th:text="'图书状态:'+(${book.isScrap}?'已报废':(${book.isSubscirbe}?'已预定':'可预定'))"></p>
+                <p class="text" th:text="'预定时间:'+${book.subscribeTime}"></p>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
